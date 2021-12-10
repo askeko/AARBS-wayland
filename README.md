@@ -1,2 +1,2 @@
 # ARS
-My Auto Ricing Scripts. A lot of it copy-pasted from https://github.com/LukeSmithxyz/LARBS
+Abs' Auto-Rice Bootstrapping Script. A lot of it copy-pasted from https://github.com/LukeSmithxyz/LARBS
