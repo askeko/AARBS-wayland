@@ -61,6 +61,24 @@ adduserandpass() { \
 	export repodir="/home/$name/.local/src"; mkdir -p "$repodir"; chown -R "$name":wheel "$(dirname "$repodir")"
 	echo "$name:$pass1" | chpasswd
 	unset pass1 pass2 ;}
+	
+refreshkeys() { \
+	case "$(readlink -f /sbin/init)" in
+		*systemd* )
+			dialog --infobox "Refreshing Arch Keyring..." 4 40
+			pacman --noconfirm -S archlinux-keyring >/dev/null 2>&1
+			;;
+		*)
+			dialog --infobox "Enabling Arch Repositories..." 4 40
+			pacman --noconfirm --needed -S artix-keyring artix-archlinux-support >/dev/null 2>&1
+			for repo in extra community; do
+				grep -q "^\[$repo\]" /etc/pacman.conf ||
+					echo "[$repo]
+Include = /etc/pacman.d/mirrorlist-arch" >> /etc/pacman.conf
+			done
+			pacman-key --populate archlinux
+			;;
+	esac ;}
 
 newperms() { # Set special sudoers settings for install (or after).
 	sed -i "/#AARBS/d" /etc/sudoers
