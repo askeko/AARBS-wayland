@@ -1,5 +1,5 @@
 #!/bin/sh
-# Auto Ricing Script (ARS)
+# Abs' Auto Rice Bootstrapping Script (AARBS)
 # License: GNU GPLv3
 
 ### OPTIONS AND VARIABLES ###
