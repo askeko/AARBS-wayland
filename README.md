@@ -1,2 +1,2 @@
 # Abs' Auto-Rice Bootstrapping Script (AARBS)
-A lot of it copy-pasted from https://github.com/LukeSmithxyz/LARBS
+Script is pretty much copy-pasted from https://github.com/LukeSmithxyz/LARBS
