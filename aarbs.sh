@@ -169,6 +169,9 @@ preinstallmsg || error "User exited."
 
 ### The rest of the script requires no user input.
 
+# Refresh Arch keyrings.
+refreshkeys || error "Error automatically refreshing Arch keyring. Consider doing so manually."
+
 for x in curl ca-certificates base-devel git ntp zsh ; do
 	dialog --title "AARBS Installation" --infobox "Installing \`$x\` which is required to install and configure other programs." 5 70
 	installpkg "$x"
