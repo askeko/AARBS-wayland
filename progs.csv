@@ -60,3 +60,5 @@ A,betterdiscordctl-git,"is a management client for better discord. Install with 
 ,moreutils,"is a collection of useful unix tools."
 ,starship,"is a fast and customizable multi-shell prompt."
 ,nodejs-lts-gallium,"is a dependency of my nvim config."
+,bat,"is a cat clone with syntax highlighting and Git integration."
+,exa,"is a modern replacement for ls."
