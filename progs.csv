@@ -24,6 +24,7 @@ A,mopidy-mpd,"is an extension for controlling playback from MPD clients like ncm
 A,mopidy-spotify,"is an extension for playing music from Spotify."
 ,mpc,"is a terminal interface for mpd that works well with mopidy."
 ,mpv,"is the patrician's choice video player."
+,ffmpeg,"can record and splice audio on the command line."
 ,man-db,"lets you read man pages of programs."
 ,ncmpcpp,"a ncurses interface for music with multiple formats and a powerful tag editor."
 ,newsboat,"is a terminal RSS client."
