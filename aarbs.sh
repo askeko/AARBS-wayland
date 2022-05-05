@@ -76,7 +76,8 @@ refreshkeys() { \
 					echo "[$repo]
 Include = /etc/pacman.d/mirrorlist-arch" >> /etc/pacman.conf
 			done
-			pacman-key --populate archlinux
+                        pacman -Sy >/dev/null 2>&1
+                        pacman-key --populate archlinux >/dev/null 2>&1
 			;;
 	esac ;}
 
@@ -190,10 +191,10 @@ newperms "%wheel ALL=(ALL) NOPASSWD: ALL"
 
 # Make pacman colorful, concurrent downloads and Pacman eye-candy.
 grep -q "ILoveCandy" /etc/pacman.conf || sed -i "/#VerbosePkgLists/a ILoveCandy" /etc/pacman.conf
-sed -i "s/^#ParallelDownloads.*$/ParallelDownloads = 5/;s/^#Color$/Color/" /etc/pacman.conf
+sed -i "/^#ParallelDownloads/s/=.*/= 5/;s/^#Color$/Color/" /etc/pacman.conf
 
 # Use all cores for compilation.
-sed -i "s/-j2/-j$(nproc)/;s/^#MAKEFLAGS/MAKEFLAGS/" /etc/makepkg.conf
+sed -i "s/-j2/-j$(nproc)/;/^#MAKEFLAGS/s/^#//" /etc/makepkg.conf
 
 manualinstall yay-bin || error "Failed to install AUR helper."
 
