@@ -24,6 +24,8 @@ A,pistol-git,"is a general purpose file previewer (Dependency of lf preview scri
 ,sxiv,"is a minimalist image viewer."
 ,xwallpaper,"sets the wallpaper."
 ,gnome-keyring,"serves as the system keyring."
+,libgnome-keyring,"dependency of gnome-keyring and GitHub for vscode"
+,seahorse,"GNOMES password manager"
 ,neovim,"a tidier vim with some useful features."
 ,mpd,"is a lightweight music daemon."
 ,mpc,"is a terminal interface for mpd."
