@@ -2,6 +2,7 @@
 ,xorg-server,"is the graphical server."
 ,xorg-xinit,"starts the graphical server."
 ,xorg-xsetroot,"is a dependency of my dwm bar script."
+,xorg-xinput,"for listing input devices."
 ,ttf-fira-sans,"provides the sans and serif fonts for AARBS."
 ,noto-fonts-emoji,"provides the emoji's you know and _really_ love."
 A,nerd-fonts-jetbrains-mono,"provides the monospaced font and symbols for AARBS."
