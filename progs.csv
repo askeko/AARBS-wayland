@@ -35,7 +35,7 @@ A,pistol-git,"is a general purpose file previewer (Dependency of lf preview scri
 ,man-db,"lets you read man pages of programs."
 ,ncmpcpp,"a ncurses interface for music with multiple formats and a powerful tag editor."
 ,newsboat,"is a terminal RSS client."
-A,brave-bin,"is for muh browsing privacy."
+,firefox,"is for muh browsing privacy."
 ,pipewire,"is the audio system. Consider trying pipewire in the future."
 ,pipewire-pulse,"gives pipewire compatibility with PulseAudio programs."
 ,pulsemixer,"is an audio controller."
