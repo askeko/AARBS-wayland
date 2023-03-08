@@ -289,6 +289,9 @@ echo "blacklist pcspkr" >/etc/modprobe.d/nobeep.conf
 chsh -s /bin/zsh "$name" >/dev/null 2>&1
 sudo -u "$name" mkdir -p "/home/$name/.cache/zsh/"
 
+# Make rofi act as a dmenu replacement
+sudo ln -s /usr/bin/rofi /usr/bin/dmenu
+
 # dbus UUID must be generated for Artix runit.
 #dbus-uuidgen >/var/lib/dbus/machine-id
 
