@@ -276,7 +276,6 @@ installationloop
 #rm -rf "/home/$name/.git/" "/home/$name/README.md" "/home/$name/LICENSE" "/home/$name/FUNDING.yml"
 
 # Install dotfiles with chezmoi
-chezmoi init --apply "$dotfilesrepo"
 
 # Install vim plugins if not alread present.
 #[ ! -f "/home/$name/.config/nvim/autoload/plug.vim" ] && vimplugininstall
