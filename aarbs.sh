@@ -7,7 +7,7 @@
 
 ### OPTIONS AND VARIABLES ###
 
-progsfile="https://raw.githubusercontent.com/LukeSmithxyz/LARBS/master/static/progs.csv"
+progsfile="https://raw.githubusercontent.com/askeko/AARBS/master/progs.csv"
 aurhelper="yay"
 repobranch="master"
 dotfilesrepo="https://github.com/askeko/absrice.git"
