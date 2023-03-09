@@ -5,6 +5,7 @@
 ,xorg-xinput,"for listing input devices."
 ,ttf-fira-sans,"provides the sans and serif fonts for AARBS."
 ,ttf-jetbrains-mono-nerd,"provides mono spaced awesomeness."
+,noto-fonts-emoji,"google emojis, a dependency for icons in starship prompt"
 A,lf-git,"is an extensive file manager that everyone likes."
 ,ueberzug,"enables previews in the lf file manager."
 ,github-cli,"is the GitHub CLI."
