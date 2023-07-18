@@ -10,7 +10,6 @@
 progsfile="https://raw.githubusercontent.com/askeko/AARBS/master/progs.csv"
 aurhelper="yay"
 repobranch="master"
-dotfilesrepo="https://github.com/askeko/absrice.git"
 
 ### FUNCTIONS ###
 
@@ -77,38 +76,12 @@ adduserandpass() {
 }
 
 refreshkeys() {
-	case "$(readlink -f /sbin/init)" in
-	*systemd*)
-		whiptail --infobox "Refreshing Arch Keyring..." 7 40
-		pacman --noconfirm -S archlinux-keyring >/dev/null 2>&1
-		;;
-	*)
-		whiptail --infobox "Enabling Arch Repositories for more a more extensive software collection..." 7 40
-		if ! grep -q "^\[universe\]" /etc/pacman.conf; then
-			echo "[universe]
-Server = https://universe.artixlinux.org/\$arch
-Server = https://mirror1.artixlinux.org/universe/\$arch
-Server = https://mirror.pascalpuffke.de/artix-universe/\$arch
-Server = https://artixlinux.qontinuum.space/artixlinux/universe/os/\$arch
-Server = https://mirror1.cl.netactuate.com/artix/universe/\$arch
-Server = https://ftp.crifo.org/artix-universe/" >>/etc/pacman.conf
-			pacman -Sy --noconfirm >/dev/null 2>&1
-		fi
-		pacman --noconfirm --needed -S \
-			artix-keyring artix-archlinux-support >/dev/null 2>&1
-		for repo in extra community; do
-			grep -q "^\[$repo\]" /etc/pacman.conf ||
-				echo "[$repo]
-Include = /etc/pacman.d/mirrorlist-arch" >>/etc/pacman.conf
-		done
-		pacman -Sy >/dev/null 2>&1
-		pacman-key --populate archlinux >/dev/null 2>&1
-		;;
-	esac
+	whiptail --infobox "Refreshing Arch Keyring..." 7 40
+ 	pacman --noconfirm -S archlinux-keyring >/dev/null 2>&1 
 }
 
 manualinstall() {
-	# Installs $1 manually. Used only for AUR helper here.
+	# Installs $1 manually from the AUR. Used only for AUR helper here.
 	# Should be run after repodir is created and var is set.
 	pacman -Qq "$1" && return 0
 	whiptail --infobox "Installing \"$1\" manually." 7 50
@@ -194,17 +167,6 @@ installationloop() {
 #	sudo -u "$name" cp -rfT "$dir" "$2"
 #}
 
-########### Using lvim instead.
-#vimplugininstall() {
-	# TODO remove shortcuts error message
-	# Installs vim plugins.
-#	whiptail --infobox "Installing neovim plugins..." 7 60
-#	mkdir -p "/home/$name/.config/nvim/autoload"
-#	curl -Ls "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim" >  "/home/$name/.config/nvim/autoload/plug.vim"
-#	chown -R "$name:wheel" "/home/$name/.config/nvim"
-#	sudo -u "$name" nvim -c "PlugInstall|q|q"
-#}
-
 finalize() {
 	whiptail --title "All done!" \
 		--msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\\n\\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment (it will start automatically in tty1).\\n\\n.t Abs" 13 80
@@ -287,15 +249,6 @@ echo "blacklist pcspkr" >/etc/modprobe.d/nobeep.conf
 # Make zsh the default shell for the user.
 chsh -s /bin/zsh "$name" >/dev/null 2>&1
 sudo -u "$name" mkdir -p "/home/$name/.cache/zsh/"
-
-# Make rofi act as a dmenu replacement
-sudo ln -s /usr/bin/rofi /usr/bin/dmenu
-
-# dbus UUID must be generated for Artix runit.
-#dbus-uuidgen >/var/lib/dbus/machine-id
-
-# Use system notifications for Brave on Artix
-#echo "export \$(dbus-launch)" >/etc/profile.d/dbus.sh
 
 # Allow wheel users to sudo with password and allow several system commands
 # (like `shutdown` to run without password).
