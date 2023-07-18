@@ -153,19 +153,7 @@ installationloop() {
 	done </tmp/progs.csv
 }
 
-########### Managed by Chezmoi instead.
-#putgitrepo() {
-	# Downloads a gitrepo $1 and places the files in $2 only overwriting conflicts
-#	whiptail --infobox "Downloading and installing config files..." 7 60
-#	[ -z "$3" ] && branch="master" || branch="$repobranch"
-#	dir=$(mktemp -d)
-#	[ ! -d "$2" ] && mkdir -p "$2"
-#	chown "$name":wheel "$dir" "$2"
-#	sudo -u "$name" git -C "$repodir" clone --depth 1 \
-#		--single-branch --no-tags -q --recursive -b "$branch" \
-#		--recurse-submodules "$1" "$dir"
-#	sudo -u "$name" cp -rfT "$dir" "$2"
-#}
+########### WRITE CHEZMOI FUNCTION HERE ###########
 
 finalize() {
 	whiptail --title "All done!" \
@@ -219,7 +207,7 @@ echo "%wheel ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/aarbs-temp
 
 # Make pacman colorful, concurrent downloads and Pacman eye-candy.
 grep -q "ILoveCandy" /etc/pacman.conf || sed -i "/#VerbosePkgLists/a ILoveCandy" /etc/pacman.conf
-sed -Ei "s/^#(ParallelDownloads).*/\1 = 5/;/^#Color$/s/#//" /etc/pacman.conf
+sed -Ei "s/^#(ParallelDownloads).*/\1 = 10/;/^#Color$/s/#//" /etc/pacman.conf
 
 # Use all cores for compilation.
 sed -i "s/-j2/-j$(nproc)/;/^#MAKEFLAGS/s/^#//" /etc/makepkg.conf
@@ -232,15 +220,7 @@ manualinstall yay || error "Failed to install AUR helper."
 # and all build dependencies are installed.
 installationloop
 
-# Install the dotfiles in the user's home directory, but remove .git dir and
-# other unnecessary files.
-#putgitrepo "$dotfilesrepo" "/home/$name" "$repobranch"
-#rm -rf "/home/$name/.git/" "/home/$name/README.md" "/home/$name/LICENSE" "/home/$name/FUNDING.yml"
-
 # Install dotfiles with chezmoi
-
-# Install vim plugins if not alread present.
-#[ ! -f "/home/$name/.config/nvim/autoload/plug.vim" ] && vimplugininstall
 
 # Most important command! Get rid of the beep!
 rmmod pcspkr
@@ -253,7 +233,7 @@ sudo -u "$name" mkdir -p "/home/$name/.cache/zsh/"
 # Allow wheel users to sudo with password and allow several system commands
 # (like `shutdown` to run without password).
 echo "%wheel ALL=(ALL:ALL) ALL" >/etc/sudoers.d/00-aarbs-wheel-can-sudo
-echo "%wheel ALL=(ALL:ALL) NOPASSWD: /usr/bin/shutdown,/usr/bin/reboot,/usr/bin/systemctl suspend,/usr/bin/wifi-menu,/usr/bin/mount,/usr/bin/umount,/usr/bin/xbacklight,/usr/bin/pacman -Syu,/usr/bin/pacman -Syyu,/usr/bin/pacman -Syyu --noconfirm,/usr/bin/loadkeys,/usr/bin/pacman -Syyuw --noconfirm,/usr/bin/pacman -S -u -y --config /etc/pacman.conf --,/usr/bin/pacman -S -y -u --config /etc/pacman.conf --" >/etc/sudoers.d/01-aarbs-cmds-without-password
+echo "%wheel ALL=(ALL:ALL) NOPASSWD: /usr/bin/shutdown,/usr/bin/reboot,/usr/bin/systemctl suspend,/usr/bin/wifi-menu,/usr/bin/mount,/usr/bin/umount,/usr/bin/pacman -Syu,/usr/bin/pacman -Syyu,/usr/bin/pacman -Syyu --noconfirm,/usr/bin/pacman -Syyuw --noconfirm,/usr/bin/pacman -S -u -y --config /etc/pacman.conf --,/usr/bin/pacman -S -y -u --config /etc/pacman.conf --" >/etc/sudoers.d/01-aarbs-cmds-without-password
 echo "Defaults editor=/usr/bin/nvim" >/etc/sudoers.d/02-aarbs-visudo-editor
 mkdir -p /etc/sysctl.d
 echo "kernel.dmesg_restrict = 0" > /etc/sysctl.d/dmesg.conf
