@@ -1,5 +1,6 @@
 #TAG,NAME IN REPO, PURPOSE (Should be a verb phrase to sound right while installing)
 ,hyprland,"is the coolest wm on the block."
+,hyprpaper,"is a wallpaper utility."
 ,xdg-desktop-portal-hyprland,"is for actual working screensharing."
 ,qt5-wayland,"is a dependency for XDPH."
 ,qt6-wayland,"is a dependency for XDPH."
