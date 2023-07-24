@@ -17,6 +17,7 @@
 ,dunst,"is a suckless notification system."
 ,exfat-utils,"allows management of FAT-drives."
 ,polkit,"manages user policies."
+,polkit-kde-agent,"is an authentication agent."
 ,gnome-keyring,"serves as the system keyring."
 ,neovim,"a tidier vim with some useful features."
 A,visual-studio-code-bin,"is everyones favorite IDE."
