@@ -153,23 +153,6 @@ installationloop() {
 	done </tmp/progs.csv
 }
 
-# Install Node Version Manager as well as Node (most recent version)
-nodeinstall() {
-  whiptail --title "AARBS Installation" \
-    --infobox "Installing NVM and Node." 7 50
-  [ -x "$(command -v "nvm")" ] || [ -x "$(command -v "node")" ] ||
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash &&
-      nvm install node
-}
-
-# Installs Rust. Should be run after packages are installed as rustup is installed there.
-rustinstall() {
-  whiptail --title "AARBS Installation" \
-    --infobox "Installing Rustc." 7 50
-  [ -x "$(command -V "rustc")" ] ||
-    rustup default stable
-}
-
 finalize() {
 	whiptail --title "All done!" \
 		--msgbox "Congrats! Provided there were no hidden errors, the script completed successfully and all the programs and configuration files should be in place.\\n\\nTo run the new graphical environment, log out and log back in as your new user, then run the command \"startx\" to start the graphical environment (it will start automatically in tty1).\\n\\n.t Abs" 13 80
@@ -234,10 +217,6 @@ manualinstall yay || error "Failed to install AUR helper."
 # the user has been created and has priviledges to run sudo without a password
 # and all build dependencies are installed.
 installationloop
-
-nodeinstall
-
-rustinstall
 
 # Most important command! Get rid of the beep!
 rmmod pcspkr
