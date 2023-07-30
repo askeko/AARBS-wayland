@@ -1,6 +1,7 @@
 #TAG,NAME IN REPO, PURPOSE (Should be a verb phrase to sound right while installing)
 ,hyprland,"is the coolest wm on the block."
 ,hyprpaper,"is a wallpaper utility."
+,rustup,"cause everyone loves rust."
 A,hyprpicker-git,"is a colorpicker."
 ,grim,"takes screenshots."
 ,slurp,"selects screenshots."
@@ -69,4 +70,3 @@ A,wev,"prints key and mouse event info, just like xev."
 ,gzip,"dependency of mason."
 ,ripgrep,"dependency of telescope."
 ,iio-sensor-proxy,"is a fix for tablet mode."
-,rustup,"cause everyone loves rust."
