@@ -77,7 +77,7 @@ adduserandpass() {
 
 refreshkeys() {
 	whiptail --infobox "Refreshing Arch Keyring..." 7 40
- 	pacman --noconfirm -S archlinux-keyring >/dev/null 2>&1 
+	pacman --noconfirm -S archlinux-keyring >/dev/null 2>&1
 }
 
 manualinstall() {
@@ -226,13 +226,16 @@ echo "blacklist pcspkr" >/etc/modprobe.d/nobeep.conf
 chsh -s /bin/zsh "$name" >/dev/null 2>&1
 sudo -u "$name" mkdir -p "/home/$name/.cache/zsh/"
 
+# Make rofi act as a dmenu replacement
+sudo ln -s /usr/bin/rofi /usr/bin/dmenu
+
 # Allow wheel users to sudo with password and allow several system commands
 # (like `shutdown` to run without password).
 echo "%wheel ALL=(ALL:ALL) ALL" >/etc/sudoers.d/00-aarbs-wheel-can-sudo
 echo "%wheel ALL=(ALL:ALL) NOPASSWD: /usr/bin/shutdown,/usr/bin/reboot,/usr/bin/systemctl suspend,/usr/bin/wifi-menu,/usr/bin/mount,/usr/bin/umount,/usr/bin/pacman -Syu,/usr/bin/pacman -Syyu,/usr/bin/pacman -Syyu --noconfirm,/usr/bin/pacman -Syyuw --noconfirm,/usr/bin/pacman -S -u -y --config /etc/pacman.conf --,/usr/bin/pacman -S -y -u --config /etc/pacman.conf --" >/etc/sudoers.d/01-aarbs-cmds-without-password
 echo "Defaults editor=/usr/bin/nvim" >/etc/sudoers.d/02-aarbs-visudo-editor
 mkdir -p /etc/sysctl.d
-echo "kernel.dmesg_restrict = 0" > /etc/sysctl.d/dmesg.conf
+echo "kernel.dmesg_restrict = 0" >/etc/sysctl.d/dmesg.conf
 
 # Last message! Install complete!
 finalize
