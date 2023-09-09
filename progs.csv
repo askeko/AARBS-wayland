@@ -1,5 +1,6 @@
 #TAG,NAME IN REPO, PURPOSE (Should be a verb phrase to sound right while installing)
 ,sway,"is the most stable Wayland wm on the block."
+,hyprland,"is the coolest Wayland wm on the block."
 ,swaybg,"is the wallpaper utility for Sway."
 ,waybar,"is the statusbar."
 ,rustup,"cause everyone loves rust."
