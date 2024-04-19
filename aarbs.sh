@@ -81,7 +81,7 @@ refreshkeys() {
 }
 
 manualinstall() {
-	# Installs $1 manually from the AUR. Used only for AUR helper here.
+	# Installs $1 manually. Used only for AUR helper here.
 	# Should be run after repodir is created and var is set.
 	pacman -Qq "$1" && return 0
 	whiptail --infobox "Installing \"$1\" manually." 7 50
@@ -95,6 +95,17 @@ manualinstall() {
 	cd "$repodir/$1" || exit 1
 	sudo -u "$name" -D "$repodir/$1" \
 		makepkg --noconfirm -si >/dev/null 2>&1 || return 1
+}
+
+hyprlandinstall() {
+	# Installs hyprland. Should be after yay is installed.
+	whiptail --infobox "Installing hyprland..." 7 50
+	sudo -u "$name" $aurhelper -S --noconfirm "gdb ninja gcc cmake meson libxcb xcb-proto xcb-util xcb-util-keysyms libxfixes libx11 libxcomposite xorg-xinput libxrender pixman wayland-protocols cairo pango seatd libxkbcommon xcb-util-wm xorg-xwayland libinput libliftoff libdisplay-info cpio tomlplusplus hyprlang hyprcursor" >/dev/null 2>&1
+	cd "$repodir" || exit 1
+	git clone --recursive https://github.com/hyprwm/Hyprland
+	cd Hyprland
+	make all >/dev/null 2>&1
+	sudo -u "$name" make install
 }
 
 maininstall() {
@@ -201,7 +212,8 @@ adduserandpass || error "Error adding username and/or password."
 # Allow user to run sudo without password. Since AUR programs must be installed
 # in a fakeroot environment, this is required for all builds with AUR.
 trap 'rm -f /etc/sudoers.d/aarbs-temp' HUP INT QUIT TERM PWR EXIT
-echo "%wheel ALL=(ALL) NOPASSWD: ALL" >/etc/sudoers.d/aarbs-temp
+echo "%wheel ALL=(ALL) NOPASSWD: ALL
+Defaults:%wheel,root runcwd=*" >/etc/sudoers.d/aarbs-temp
 
 # Make pacman colorful, concurrent downloads and Pacman eye-candy.
 grep -q "ILoveCandy" /etc/pacman.conf || sed -i "/#VerbosePkgLists/a ILoveCandy" /etc/pacman.conf
@@ -211,6 +223,8 @@ sed -Ei "s/^#(ParallelDownloads).*/\1 = 10/;/^#Color$/s/#//" /etc/pacman.conf
 sed -i "s/-j2/-j$(nproc)/;/^#MAKEFLAGS/s/^#//" /etc/makepkg.conf
 
 manualinstall yay || error "Failed to install AUR helper."
+
+hyprlandinstall
 
 # The command that does all the installing. Reads the progs.csv file and
 # installs each needed program the way required. Be sure to run this only after
@@ -232,10 +246,12 @@ sudo ln -s /usr/bin/rofi /usr/bin/dmenu
 # Allow wheel users to sudo with password and allow several system commands
 # (like `shutdown` to run without password).
 echo "%wheel ALL=(ALL:ALL) ALL" >/etc/sudoers.d/00-aarbs-wheel-can-sudo
-echo "%wheel ALL=(ALL:ALL) NOPASSWD: /usr/bin/shutdown,/usr/bin/reboot,/usr/bin/systemctl suspend,/usr/bin/wifi-menu,/usr/bin/mount,/usr/bin/umount,/usr/bin/pacman -Syu,/usr/bin/pacman -Syyu,/usr/bin/pacman -Syyu --noconfirm,/usr/bin/pacman -Syyuw --noconfirm,/usr/bin/pacman -S -u -y --config /etc/pacman.conf --,/usr/bin/pacman -S -y -u --config /etc/pacman.conf --" >/etc/sudoers.d/01-aarbs-cmds-without-password
+echo "%wheel ALL=(ALL:ALL) NOPASSWD: /usr/bin/shutdown,/usr/bin/reboot,/usr/bin/systemctl suspend,/usr/bin/wifi-menu,/usr/bin/mount,/usr/bin/umount,/usr/bin/xbacklight,/usr/bin/pacman -Syu,/usr/bin/pacman -Syyu,/usr/bin/pacman -Syyu --noconfirm,/usr/bin/loadkeys,/usr/bin/pacman -Syyuw --noconfirm,/usr/bin/pacman -S -y --config /etc/pacman.conf --,/usr/bin/pacman -S -y -u --config /etc/pacman.conf --" >/etc/sudoers.d/01-aarbs-cmds-without-password
 echo "Defaults editor=/usr/bin/nvim" >/etc/sudoers.d/02-aarbs-visudo-editor
 mkdir -p /etc/sysctl.d
 echo "kernel.dmesg_restrict = 0" >/etc/sysctl.d/dmesg.conf
+
+rm -f /etc/sudoers.d/larbs-temp
 
 # Last message! Install complete!
 finalize
