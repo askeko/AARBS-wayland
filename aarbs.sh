@@ -100,7 +100,7 @@ manualinstall() {
 hyprlandinstall() {
 	# Installs hyprland. Should be after yay is installed.
 	whiptail --infobox "Installing hyprland..." 7 50
-	sudo -u "$name" $aurhelper -S --noconfirm "gdb ninja gcc cmake meson libxcb xcb-proto xcb-util xcb-util-keysyms libxfixes libx11 libxcomposite xorg-xinput libxrender pixman wayland-protocols cairo pango seatd libxkbcommon xcb-util-wm xorg-xwayland libinput libliftoff libdisplay-info cpio tomlplusplus hyprlang hyprcursor" >/dev/null 2>&1
+	sudo -u "$name" $aurhelper -S --noconfirm "gdb ninja gcc cmake meson libxcb xcb-proto xcb-util xcb-util-keysyms libxfixes libx11 libxcomposite xorg-xinput libxrender pixman wayland-protocols cairo pango seatd libxkbcommon xcb-util-wm xorg-xwayland libinput libliftoff libdisplay-info cpio tomlplusplus hyprlang hyprcursor hyprwayland-scanner xcb-util-errors hyprutils" >/dev/null 2>&1
 	cd "$repodir" || exit 1
 	git clone --recursive https://github.com/hyprwm/Hyprland
 	cd Hyprland
